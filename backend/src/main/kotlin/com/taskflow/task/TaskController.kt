@@ -1,10 +1,12 @@
 package com.taskflow.task
 
 import com.taskflow.user.UserRepository
+import com.taskflow.websocket.TaskEvent
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 import org.springframework.http.HttpStatus
+import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
@@ -12,7 +14,8 @@ import java.security.Principal
 @RequestMapping("/api/tasks")
 class TaskController(
     private val repository: TaskRepository,
-    private val users: UserRepository
+    private val users: UserRepository,
+    private val messaging: SimpMessagingTemplate
 ) {
     @GetMapping
     fun list(principal: Principal): List<Task> = repository.findAllByUserEmail(principal.name)
@@ -25,7 +28,9 @@ class TaskController(
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@Valid @RequestBody request: TaskRequest, principal: Principal): Task {
         val user = users.findByEmail(principal.name).orElseThrow { UserNotFoundException(principal.name) }
-        return repository.save(Task(title = request.title, description = request.description, user = user))
+        val task = repository.save(Task(title = request.title, description = request.description, user = user))
+        publish("CREATED", task, principal.name)
+        return task
     }
 
     @PutMapping("/{id}")
@@ -33,7 +38,9 @@ class TaskController(
         val task = get(id, principal)
         task.title = request.title
         task.description = request.description
-        return repository.save(task)
+        val saved = repository.save(task)
+        publish("UPDATED", saved, principal.name)
+        return saved
     }
 
     @DeleteMapping("/{id}")
@@ -41,6 +48,11 @@ class TaskController(
     fun delete(@PathVariable id: Long, principal: Principal) {
         val task = get(id, principal)
         repository.delete(task)
+        messaging.convertAndSend("/topic/tasks/${principal.name}", TaskEvent("DELETED", id, principal.name))
+    }
+
+    private fun publish(type: String, task: Task, email: String) {
+        messaging.convertAndSend("/topic/tasks/$email", TaskEvent(type, task.id!!, email))
     }
 }
 
