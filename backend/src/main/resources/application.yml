@@ -1,27 +1,25 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/taskflow
-    username: postgres
-    password: password
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/taskflow}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
-    
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
+    open-in-view: false
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-    show-sql: true
 
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 app:
   jwt:
-    secret: your-jwt-secret-key-here
-    expiration: 86400000
+    secret: ${JWT_SECRET:change-this-development-secret-key-to-a-long-random-value}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
 
 logging:
   level:
-    com.taskflow: DEBUG
+    com.taskflow: INFO
