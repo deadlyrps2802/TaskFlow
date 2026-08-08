@@ -9,9 +9,7 @@ plugins {
 group = "com.taskflow"
 version = "1.0.0"
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-}
+java { sourceCompatibility = JavaVersion.VERSION_17 }
 
 repositories { mavenCentral() }
 
@@ -21,6 +19,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.flywaydb:flyway-core")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
