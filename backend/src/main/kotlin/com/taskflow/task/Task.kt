@@ -1,5 +1,6 @@
 package com.taskflow.task
 
+import com.taskflow.user.User
 import jakarta.persistence.*
 
 @Entity
@@ -16,7 +17,11 @@ class Task(
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    var status: TaskStatus = TaskStatus.TODO
+    var status: TaskStatus = TaskStatus.TODO,
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    var user: User
 )
 
 enum class TaskStatus {
