@@ -1,5 +1,6 @@
 package com.taskflow.task
 
+import com.taskflow.user.UserNotFoundException
 import com.taskflow.user.UserRepository
 import com.taskflow.websocket.TaskEvent
 import jakarta.validation.Valid
@@ -65,4 +66,3 @@ data class TaskRequest(
 )
 
 class TaskNotFoundException(id: Long) : RuntimeException("Task $id was not found")
-class UserNotFoundException(email: String) : RuntimeException("User $email was not found")
