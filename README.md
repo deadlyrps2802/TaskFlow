@@ -143,7 +143,7 @@ TaskFlow/
 
 - JDK 17+
 - PostgreSQL
-- Gradle
+- Gradle 8.7+
 
 Create a PostgreSQL database named `taskflow`, then configure environment variables:
 
@@ -158,13 +158,13 @@ JWT_EXPIRATION_MS=86400000
 From `backend`:
 
 ```bash
-./gradlew bootRun
+gradle bootRun
 ```
 
 Windows:
 
 ```powershell
-.\gradlew.bat bootRun
+gradle bootRun
 ```
 
 The API starts on port `8080` by default. Flyway applies versioned migrations automatically.
@@ -188,7 +188,7 @@ docker run --rm -p 8080:8080 \
 Run tests locally:
 
 ```bash
-./gradlew test
+gradle test
 ```
 
 Every push and pull request targeting `main` runs the backend test suite through GitHub Actions.
