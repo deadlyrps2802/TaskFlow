@@ -1,36 +1,108 @@
-# TaskFlow - Smart Task Management 🚀
+# TaskFlow — Task Management Backend 🚀
 
-A modern, AI-powered task management application built with Kotlin multiplatform.
+TaskFlow is a **Kotlin + Spring Boot** backend project for building a secure task-management service. The repository currently focuses on the backend foundation, including the application setup, persistence layer dependencies, authentication/security dependencies, validation, and WebSocket support.
 
-## ✨ Features
+> **Status:** Backend foundation / work in progress. Some features described in the original README are planned rather than fully implemented in the current repository.
 
-- 📱 **Cross-platform** - Android app and web interface
-- 🤖 **AI-powered** task suggestions using OpenAI
-- 👥 **Real-time collaboration** with team members
-- 📊 **Smart analytics** and productivity insights
-- 🔔 **Notifications & reminders** for due tasks
-- 🌙 **Dark/Light theme** support
-- 💾 **Offline support** with local caching
+## 🧱 Current Architecture
 
-## 🛠️ Tech Stack
+```text
+TaskFlow/
+├── backend/
+│   ├── build.gradle.kts
+│   └── src/
+│       └── main/
+│           ├── kotlin/
+│           │   └── com/taskflow/
+│           │       └── TaskFlowApplication.kt
+│           └── resources/
+├── android-app/
+├── .gitignore
+├── LICENSE
+└── README.md
+```
 
-### Backend
-- **Spring Boot** with Kotlin Coroutines
-- **PostgreSQL** database
-- **JWT** authentication
-- **WebSocket** for real-time updates
-- **OpenAI API** integration
+## 🛠️ Backend Stack
 
-### Android
-- **Jetpack Compose** for modern UI
-- **MVVM Architecture** with ViewModel
-- **Room Database** for offline storage
-- **Ktor Client** for networking
-- **Dagger Hilt** for dependency injection
+- **Kotlin 1.9.x**
+- **Java 17**
+- **Spring Boot 3.2**
+- Spring Web
+- Spring Data JPA
+- Spring Security
+- Spring WebSocket
+- Spring Validation
+- PostgreSQL
+- Jackson Kotlin
+- Kotlin Coroutines
+- JJWT for JWT-based authentication
 
-### Web
-- **Compose for Web** (Future implementation)
-- **Kotlin/JS** for frontend logic
+The dependency configuration is defined in `backend/build.gradle.kts`.
 
-## 🏗️ Architecture
+## 🎯 Planned / Expandable Features
 
+The project is structured to support the following features as development continues:
+
+- User authentication and authorization
+- CRUD operations for tasks
+- PostgreSQL persistence with JPA
+- JWT-based security
+- Real-time task updates using WebSockets
+- Task validation and API-level error handling
+- Android client integration
+- AI-assisted task recommendations
+
+These should be considered **planned capabilities unless the corresponding implementation is present in the repository**.
+
+## ▶️ Running the Backend
+
+### Prerequisites
+
+- JDK 17+
+- PostgreSQL
+- Gradle wrapper / Gradle
+
+### Start the application
+
+From the `backend` directory:
+
+```bash
+./gradlew bootRun
+```
+
+On Windows:
+
+```powershell
+.\gradlew.bat bootRun
+```
+
+Before running the application, configure the required PostgreSQL connection and application security settings in the Spring configuration.
+
+## 🧪 Development Goals
+
+The project is intended as a backend engineering project demonstrating:
+
+- REST API development with Spring Boot
+- Kotlin backend development
+- Database-backed application design
+- Authentication and authorization concepts
+- Real-time communication with WebSockets
+- Production-oriented project structure
+
+## 📌 Roadmap
+
+- [ ] Implement task CRUD APIs
+- [ ] Add user/account domain models
+- [ ] Add JWT authentication flow
+- [ ] Add PostgreSQL configuration and migrations
+- [ ] Add WebSocket task events
+- [ ] Add automated unit/integration tests
+- [ ] Connect the Android client
+- [ ] Add AI-assisted task functionality
+- [ ] Add CI/CD and deployment documentation
+
+## Author
+
+**Rudra Pratap Singh**
+
+GitHub: [@deadlyrps2802](https://github.com/deadlyrps2802)
