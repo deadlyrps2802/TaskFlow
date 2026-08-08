@@ -7,9 +7,10 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @Configuration
-class SecurityConfig {
+class SecurityConfig(private val jwtAuthenticationFilter: JwtAuthenticationFilter) {
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
@@ -21,5 +22,6 @@ class SecurityConfig {
             it.requestMatchers("/api/auth/**", "/actuator/health").permitAll()
             it.anyRequest().authenticated()
         }
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
         .build()
 }
