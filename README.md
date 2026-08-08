@@ -1,26 +1,40 @@
 # TaskFlow — Secure Task Management Backend 🚀
 
-TaskFlow is a **Kotlin + Spring Boot** backend for a task-management service. It includes user registration/login, BCrypt password hashing, JWT authentication, PostgreSQL persistence, authenticated task CRUD, validation, Flyway migrations, real-time task events over STOMP/WebSockets, Docker support, and CI test automation.
+TaskFlow is a **Kotlin + Spring Boot** backend for a secure task-management service. It includes user registration/login, BCrypt password hashing, JWT authentication, PostgreSQL persistence, authenticated task CRUD, validation, Flyway migrations, real-time task events over STOMP/WebSockets, Docker support, and CI test automation.
 
 > **Status:** Backend MVP complete; Android client and AI-assisted features are planned extensions.
 
-## 🧱 Architecture
+## 🧱 System Architecture
 
-```text
-Client
-  │
-  ├── Auth API ──► BCrypt + JWT
-  │                  │
-  │                  ▼
-  └── Bearer Token ─► Spring Security ──► Task API
-                                           │
-                              ┌────────────┴────────────┐
-                              ▼                         ▼
-                         JPA + Flyway              STOMP Events
-                              │                         │
-                              ▼                         ▼
-                         PostgreSQL                WebSocket
+```mermaid
+flowchart LR
+    A[Client / Android App] --> B[REST API]
+    A --> W[STOMP WebSocket]
+    B --> C[Spring Security]
+    C --> D[JWT Authentication]
+    C --> E[Task Controller]
+    E --> F[Task Service / Repository]
+    F --> G[(PostgreSQL)]
+    F --> H[Flyway Migrations]
+    E --> I[Task Event Publisher]
+    I --> W
 ```
+
+## 🚀 Deployment Flow
+
+```mermaid
+flowchart LR
+    A[Developer] -->|git push| B[GitHub]
+    B --> C[GitHub Actions CI]
+    C -->|tests pass| D[Docker Build]
+    D --> E[Container Registry]
+    E --> F[Cloud / VM]
+    F --> G[TaskFlow API]
+    G --> H[(Managed PostgreSQL)]
+    G --> I[WebSocket Clients]
+```
+
+> The deployment flow documents the intended production path. The repository currently provides Docker support and CI; a live production deployment is still a roadmap item.
 
 ## ✨ Implemented Features
 
@@ -161,12 +175,6 @@ From `backend`:
 gradle bootRun
 ```
 
-Windows:
-
-```powershell
-gradle bootRun
-```
-
 The API starts on port `8080` by default. Flyway applies versioned migrations automatically.
 
 ## 🐳 Docker
@@ -216,7 +224,7 @@ Every push and pull request targeting `main` runs the backend test suite through
 - [ ] Broader integration test suite
 - [ ] Android client integration
 - [ ] AI-assisted task functionality
-- [ ] Production deployment documentation
+- [ ] Production deployment
 
 ## Author
 
