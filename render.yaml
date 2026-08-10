@@ -3,7 +3,6 @@ services:
     name: taskflow-api
     runtime: docker
     plan: free
-    rootDir: backend
     dockerfilePath: ./Dockerfile
     healthCheckPath: /actuator/health
     envVars:
