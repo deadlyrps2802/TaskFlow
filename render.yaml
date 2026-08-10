@@ -2,14 +2,23 @@ services:
   - type: web
     name: taskflow-api
     runtime: docker
+    plan: free
     rootDir: backend
     dockerfilePath: ./Dockerfile
     healthCheckPath: /actuator/health
     envVars:
-      - key: DB_URL
+      - key: DB_HOST
         fromDatabase:
           name: taskflow-db
-          property: connectionString
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: taskflow-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: taskflow-db
+          property: database
       - key: DB_USERNAME
         fromDatabase:
           name: taskflow-db
@@ -23,8 +32,8 @@ services:
       - key: JWT_EXPIRATION_MS
         value: "86400000"
 
-  - type: database
-    name: taskflow-db
+databases:
+  - name: taskflow-db
     databaseName: taskflow
     user: taskflow
     plan: free
