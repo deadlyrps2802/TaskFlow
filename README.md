@@ -2,7 +2,15 @@
 
 TaskFlow is a **Kotlin + Spring Boot** backend for a secure task-management service. It includes user registration/login, BCrypt password hashing, JWT authentication, PostgreSQL persistence, authenticated task CRUD, validation, Flyway migrations, real-time task events over STOMP/WebSockets, Docker support, and CI test automation.
 
-> **Status:** Backend MVP complete; Android client and AI-assisted features are planned extensions.
+> **Status:** Backend MVP deployed on Render; Android client and AI-assisted features remain planned extensions.
+
+## 🌐 Live Deployment
+
+**TaskFlow API:** https://taskflow-api-b7f4.onrender.com
+
+**Health check:** https://taskflow-api-b7f4.onrender.com/actuator/health
+
+The production service runs on Render with PostgreSQL in the same region. Flyway migrations are applied automatically during startup.
 
 ## 🧱 System Architecture
 
@@ -20,21 +28,16 @@ flowchart LR
     I --> W
 ```
 
-## 🚀 Deployment Flow
+## 🚀 Production Deployment Flow
 
 ```mermaid
 flowchart LR
-    A[Developer] -->|git push| B[GitHub]
-    B --> C[GitHub Actions CI]
-    C -->|tests pass| D[Docker Build]
-    D --> E[Container Registry]
-    E --> F[Cloud / VM]
-    F --> G[TaskFlow API]
-    G --> H[(Managed PostgreSQL)]
-    G --> I[WebSocket Clients]
+    A[GitHub] --> B[Render Docker Build]
+    B --> C[Spring Boot]
+    C --> D[(Managed PostgreSQL)]
+    C --> E[REST API]
+    C --> F[STOMP WebSocket]
 ```
-
-> The deployment flow documents the intended production path. The repository currently provides Docker support and CI; a live production deployment is still a roadmap item.
 
 ## ✨ Implemented Features
 
@@ -54,6 +57,7 @@ flowchart LR
 - JWT unit tests
 - Dockerized backend build
 - GitHub Actions CI for automated tests
+- Production deployment on Render
 
 ## 🛠️ Tech Stack
 
@@ -65,12 +69,13 @@ flowchart LR
 - Spring Data JPA
 - Spring Validation
 - Spring WebSocket / STOMP
-- PostgreSQL
+- PostgreSQL 16
 - Flyway
 - JJWT
 - Kotlin Coroutines
 - Docker
 - GitHub Actions
+- Render
 
 ## 🔌 API Overview
 
@@ -146,6 +151,8 @@ TaskFlow/
 │       └── test/kotlin/com/taskflow/
 ├── android-app/
 ├── .github/workflows/backend-ci.yml
+├── Dockerfile
+├── render.yaml
 ├── .gitignore
 ├── LICENSE
 └── README.md
@@ -179,7 +186,7 @@ The API starts on port `8080` by default. Flyway applies versioned migrations au
 
 ## 🐳 Docker
 
-From `backend`:
+From the repository root:
 
 ```bash
 docker build -t taskflow-api .
@@ -221,13 +228,13 @@ Every push and pull request targeting `main` runs the backend test suite through
 - [x] JWT unit tests
 - [x] Dockerized backend
 - [x] GitHub Actions CI
+- [x] Production deployment
 - [ ] Broader integration test suite
 - [ ] Android client integration
 - [ ] AI-assisted task functionality
-- [ ] Production deployment
 
 ## Author
 
 **Rudra Pratap Singh**
 
-GitHub: [@deadlyrps2802](https://github.com/deadlyrps2802)
+GitHub: https://github.com/deadlyrps2802
